@@ -1,4 +1,5 @@
 import * as core from '@actions/core'
+import { HttpClient } from '@actions/http-client'
 // import { wait } from './wait.js'
 
 /**
@@ -8,10 +9,17 @@ import * as core from '@actions/core'
  */
 export async function run(): Promise<void> {
   try {
-    const name = core.getInput('firstname')
-    core.info(`Person's name is ${name}`)
+    // https://n1xf0y3j35.execute-api.us-east-2.amazonaws.com/serverless_lambda_stage/hello/jerry?hair=green
+    const pony = core.getInput('pony')
+    core.info(`Pony's name is ${pony}`)
 
-    core.exportVariable('firstname', name)
+    const http = new HttpClient('my-first-action')
+    const res = await http.get(
+      `https://n1xf0y3j35.execute-api.us-east-2.amazonaws.com/serverless_lambda_stage/hello/${pony}?hair=green`
+    )
+
+    core.info(`Response from server: ${res.message}`)
+    core.info(`Body from server: ${await res.readBody()}`)
   } catch (error) {
     if (error instanceof Error) core.setFailed(error.message)
   }

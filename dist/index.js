@@ -27238,6 +27238,8 @@ function requireCore () {
 
 var coreExports = requireCore();
 
+var libExports = requireLib();
+
 // import { wait } from './wait.js'
 /**
  * The main function for the action.
@@ -27246,9 +27248,13 @@ var coreExports = requireCore();
  */
 async function run() {
     try {
-        const name = coreExports.getInput('firstname');
-        coreExports.info(`Person's name is ${name}`);
-        coreExports.exportVariable('firstname', name);
+        // https://n1xf0y3j35.execute-api.us-east-2.amazonaws.com/serverless_lambda_stage/hello/jerry?hair=green
+        const pony = coreExports.getInput('pony');
+        coreExports.info(`Pony's name is ${pony}`);
+        const http = new libExports.HttpClient('my-first-action');
+        const res = await http.get(`https://n1xf0y3j35.execute-api.us-east-2.amazonaws.com/serverless_lambda_stage/hello/${pony}?hair=green`);
+        coreExports.info(`Response from server: ${res.message}`);
+        coreExports.info(`Body from server: ${await res.readBody()}`);
     }
     catch (error) {
         if (error instanceof Error)
