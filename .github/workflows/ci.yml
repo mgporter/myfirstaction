@@ -57,7 +57,7 @@ jobs:
         id: test-action
         uses: ./
         with:
-          name: I'm Jambo!
+          firstname: I'm Jambo!
 
       - name: Print Output
         id: output

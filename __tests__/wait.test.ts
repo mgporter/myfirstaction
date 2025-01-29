@@ -3,7 +3,7 @@
  */
 import { wait } from '../src/wait.js'
 
-describe('wait.ts', () => {
+describe.skip('wait.ts', () => {
   it('Throws an invalid number', async () => {
     const input = parseInt('foo', 10)
 

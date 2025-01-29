@@ -1,5 +1,5 @@
 import * as core from '@actions/core'
-import { wait } from './wait.js'
+// import { wait } from './wait.js'
 
 /**
  * The main function for the action.
@@ -8,16 +8,10 @@ import { wait } from './wait.js'
  */
 export async function run(): Promise<void> {
   try {
-
-    const name = core.getInput("firstname");
+    const name = core.getInput('firstname')
     core.info(`Person's name is ${name}`)
-    
 
-    core.exportVariable('personname', name);
-
-
-
-    
+    core.exportVariable('firstname', name)
   } catch (error) {
     if (error instanceof Error) core.setFailed(error.message)
   }
